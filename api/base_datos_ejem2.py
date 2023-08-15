@@ -31,7 +31,7 @@ app = FastAPI()
 async def agregar_datos(datos: Datos):
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO datos (titulo, creadores, imagenes, ligas, precio) VALUES (?, ?, ?, ?, ?)", (datos.titulo, datos.creadores, datos.imagenes, datos.ligas, datos.precio))
+    cursor.execute("INSERT INTO libros (titulo, creadores, imagenes, ligas, precio) VALUES (?, ?, ?, ?, ?)", (datos.titulo, datos.creadores, datos.imagenes, datos.ligas, datos.precio))
     conn.commit()
     conn.close()
     return {"mensaje": "Datos agregados exitosamente"}
@@ -40,7 +40,7 @@ async def agregar_datos(datos: Datos):
 async def obtener_todos_datos():
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM datos")
+    cursor.execute("SELECT * FROM libros")
     resultados = cursor.fetchall()
     conn.close()
     if resultados:
@@ -52,7 +52,7 @@ async def obtener_todos_datos():
 async def consultar_datos(id: int):
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT titulo, creadores, imagenes, ligas, precio FROM datos WHERE id=?", (id,))
+    cursor.execute("SELECT titulo, creadores, imagenes, ligas, precio FROM libros WHERE id=?", (id,))
     resultado = cursor.fetchone()
     conn.close()
     if resultado:
@@ -65,7 +65,7 @@ async def consultar_datos(id: int):
 async def actualizar_datos(id:int, datos: Datos):
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("UPDATE datos SET titulo=?, creadores=?, imagenes=?, ligas=?, precio=? WHERE id=?", (datos.titulo,datos.creadores, datos.imagenes, datos.ligas, datos.precio))
+    cursor.execute("UPDATE libros SET titulo=?, creadores=?, imagenes=?, ligas=?, precio=? WHERE id=?", (datos.titulo,datos.creadores, datos.imagenes, datos.ligas, datos.precio))
     resultado = cursor.fetchone()
     conn.close()
     return {"mensaje": "Datos actualizados exitosamente"}
@@ -74,7 +74,7 @@ async def actualizar_datos(id:int, datos: Datos):
 async def eliminar_datos(id: int):
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM datos WHERE id=?", (id,))
+    cursor.execute("DELETE FROM libros WHERE id=?", (id,))
     conn.commit()
     conn.close()
     return {"mensaje": "Datos eliminados exitosamente"}
