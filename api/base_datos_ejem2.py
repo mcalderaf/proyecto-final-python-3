@@ -65,8 +65,8 @@ async def consultar_datos(id: int):
 async def actualizar_datos(id:int, datos: Datos):
     conn = sqlite3.connect("libros.db")
     cursor = conn.cursor()
-    cursor.execute("UPDATE libros SET titulo=?, creadores=?, imagenes=?, ligas=?, precio=? WHERE id=?", (datos.titulo,datos.creadores, datos.imagenes, datos.ligas, datos.precio))
-    resultado = cursor.fetchone()
+    cursor.execute("UPDATE libros SET titulo=?, creadores=?, imagenes=?, ligas=?, precio=? WHERE id=?", (datos.titulo,datos.creadores, datos.imagenes, datos.ligas, datos.precio,id))
+    conn.commit()
     conn.close()
     return {"mensaje": "Datos actualizados exitosamente"}
 
